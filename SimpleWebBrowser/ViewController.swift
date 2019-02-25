@@ -12,12 +12,20 @@ import WebKit
 class ViewController: UIViewController, WKNavigationDelegate {
     
     var webView: WKWebView!
+    var textField: UITextField = UITextField()
 
     override func loadView() {
         webView = WKWebView()
         webView.navigationDelegate = self
         view = webView
  
+        
+        textField.placeholder = "Enter adress"
+        textField.frame.size.width = 300
+        textField.borderStyle = .roundedRect
+        textField.clearButtonMode = .whileEditing
+       // navigationController?.view.addSubview(textField)
+        navigationItem.titleView = textField
     }
     
     
@@ -30,43 +38,55 @@ class ViewController: UIViewController, WKNavigationDelegate {
         
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Open", style: .plain, target: self, action: #selector(openTapped))
+        
 
     }
     
     
     @objc func openTapped() {
         
-        let vc = UIAlertController(title: "Pick page to open", message: nil, preferredStyle: .actionSheet)
+//        let vc = UIAlertController(title: "Pick page to open", message: nil, preferredStyle: .actionSheet)
+//
+//        vc.addAction(UIAlertAction(title: "hackingwithswift.com", style: .default, handler: openPage))
+//
+//          vc.addAction(UIAlertAction(title: "apple.com", style: .default, handler: openPage))
+//          vc.addAction(UIAlertAction(title: "google.rs", style: .default, handler: openPage))
+//          vc.addAction(UIAlertAction(title: "Cancle", style: .cancel, handler: nil))
+//
+//        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+//        present(vc, animated: true, completion: nil)
         
-        vc.addAction(UIAlertAction(title: "hackingwithswift.com", style: .default, handler: openPage))
+        openeEnteredAdress()
         
-          vc.addAction(UIAlertAction(title: "apple.com", style: .default, handler: openPage))
-          vc.addAction(UIAlertAction(title: "google.rs", style: .default, handler: openPage))
-          vc.addAction(UIAlertAction(title: "Cancle", style: .cancel, handler: nil))
-        
-        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
-        
-        present(vc, animated: true, completion: nil)
     }
     
     
     
-    func openPage(aciton: UIAlertAction) {
+//    func openPage(aciton: UIAlertAction) {
+//
+//
+//
+//        guard let actionTitle = aciton.title else {
+//            return
+//        }
+//        guard let url = URL(string: "https://" + actionTitle) else {return}
+//
+//
+//        webView.load(URLRequest(url: url))
+//
+//
+//    }
+    
+    func openeEnteredAdress() {
         
-        guard let actionTitle = aciton.title else {
+        guard let adress = textField.text else {
             return
         }
-        guard let url = URL(string: "https://" + actionTitle) else {return}
-        
-        
+        guard let url = URL(string: "https://" + adress) else {return}
         webView.load(URLRequest(url: url))
         
-
     }
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        
-        title = webView.title
-    }
+  
 
 }
 
